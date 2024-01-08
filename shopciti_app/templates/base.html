@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID">
+
+    <title>ShopCiti</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+
+    <!-- Vendor CSS Files -->
+    <link href="static/vendor/aos/aos.css" rel="stylesheet">
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<style>
+    #header {
+        position: fixed;
+        width: 100%;
+        overflow: hidden;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 80px;
+        background-color: #ffffff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06)
+    }
+    
+    .logo img {
+        width: 280px;
+        /* Set the desired width */
+        height: auto;
+        /* Maintain aspect ratio */
+    }
+    
+    #navbar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .quantity {
+        background-color: red;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        position: absolute;
+        top: -5px;
+        left: 80%;
+        padding: 3px 5px;
+        font-size: 7px
+    }
+    
+    #mobile {
+        display: none;
+        align-items: center
+    }
+    
+    #close {
+        display: none
+    }
+    
+    #navbar li {
+        list-style: none;
+        padding: 0 20px;
+        position: relative;
+    }
+    
+    #navbar li a {
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a1a1a;
+        transition: 0.3s ease
+    }
+    
+    #navbar li a:hover,
+    #navbar li a.active {
+        color: #088178;
+    }
+    
+    #navbar li a:hover::after,
+    #navbar li a.active::after {
+        content: " ";
+        width: 30%;
+        height: 2px;
+        background: 2px;
+        background-color: #088178;
+        position: absolute;
+        bottom: -4px;
+        left: 20px;
+    }
+    
+    #cart-sidebar {
+        width: 300px;
+        /* Adjust the width as needed */
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -300px;
+        /* Initially hidden to the right */
+        background-color: #fff;
+        transition: right 0.3s ease;
+        overflow-y: scroll;
+        z-index: 999;
+        /* Set a high z-index to make it appear above the navbar */
+    }
+    
+    #cart-sidebar.open {
+        right: 0;
+        /* Slide in from the right */
+    }
+</style>
+
+<body>
+    <section id="header">
+        <div class="logo">
+            <a href="#"><img src="{% static 'img/logo3.png' %}"></a>
+        </div>
+        <div>
+            <ul id="navbar">
+                <li><a href="{% url 'home_shops' %}" class="active">Home</a></li>
+                <li><a href="{% url 'shop_list' %}">Shops</a></li>
+                <li><a href="#">Men</a></li>
+                <li><a href="#">Women</a></li>
+                <li><a href="#">Offers</a></li>
+                <li><a href="#">Brands</a></li>
+                <li><a href="{% url 'home2' %}">Brand Onwer</a></li>
+                <li>
+                    <a href="#" id="lg-bag">
+                        <i class="fal fa-shopping-bag"></i>
+                    </a>
+                    <span class="quantity">0</span>
+                </li>
+                <li>
+                    <a href="#" id="close" class="far fa-times"><i></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fal fa-shopping-bag"></i>
+        <span class="quantity">0</span>
+            </a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <main>
+        {% block content %}{% endblock %}
+
+    </main>
+    <footer>
+        <!-- Your footer content goes here -->
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="script.js"></script>
+
+
+    <script>
+        // Pure JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartIcon = document.getElementById('lg-bag');
+            const cartSidebar = document.getElementById('cart-sidebar');
+            const closeCart = document.getElementById('close-cart');
+
+            cartIcon.addEventListener('click', function() {
+                cartSidebar.classList.add('open');
+            });
+
+            closeCart.addEventListener('click', function() {
+                cartSidebar.classList.remove('open');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
